@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: cloud-eureka
+  security:
+    user:
+      name: admin
+      password: 123456
+server:
+  port: 8761
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}  # 修改显示的微服务名为：IP:端口
+  client:
+    #是否注册到注册中心
+    register-with-eureka: true
+    #是否从配置中心检索服务
+    fetch-registry: true
+    #服务中心地址
+    service-url:
+      defaultZone: http://admin:123456@${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    #是否开启自我保护机制
+    enable-self-preservation: false
+    #该配置可以修改检查失效服务的时间，每隔10s检查失效服务，并移除列表 (Spring Cloud默认该配置是 60s，单位：毫秒)
+    eviction-interval-timer-in-ms: 10000

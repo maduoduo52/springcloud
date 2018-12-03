@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: dev
+info:
+  mark: 配置中心
+  author: Maduo
+  version: 1.0.0
