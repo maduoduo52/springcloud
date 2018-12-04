@@ -37,6 +37,7 @@
 
     <modules>
         <module>cloud-eureka</module>
+        <module>cloud-config-center</module>
     </modules>
 
     <dependencies>

@@ -5,18 +5,8 @@ spring:
     config:
       #配置中心地址（可使用git配置或者mysql配置）
       server:
-#         native:
-#            searchLocations: classpath:/dev/
-        git:
-          #git 服务器地址
-          uri: https://github.com/maduoduo52
-#          search-paths: 扫描文件夹名称
-#          username: 账号
-#          password: 密码
-        mysql:
-          enable: true   #启用mysql配置信息
-          yml: true # 是否兼容原理的yml配置信息  其实不推荐避免造成混乱  但是可以做兼容
-      label: dev
+        native:
+          searchLocations: classpath:/dev/
   # mysql 属性配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

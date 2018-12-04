@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: dev,native  #开发环境
 info:
   mark: 配置中心
   author: Maduo

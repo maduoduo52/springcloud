@@ -6,6 +6,6 @@ eureka:
     #是否ip地址注册
     prefer-ip-address: true
 info:
-  mark: 配置中心
+  mark: 注册中心
   author: Maduo
   version: 1.0.0
