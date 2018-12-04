@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!--日志文件路径-->
+    <springProperty scope="context" name="LOG_PATH" source="log.file.path" defaultValue="logs" />
+    <springProperty scope="context" name="TEST_PATH" source="log.file.path" defaultValue="${log.path}" />
+    <!--app获取类-->
+    <conversionRule conversionWord="appName" converterClass="com.cloud.mdd.log.config.AppNameConverter" />
+    <!--ip获取类-->
+    <conversionRule conversionWord="ip" converterClass="com.cloud.mdd.log.config.IPLogConfig" />
+    <!--请求ID获取类-->
+    <conversionRule conversionWord="reqId" converterClass="com.cloud.mdd.log.config.ReqIdConfig" />
+    <!--   时间   日志级别  java类  行数   输出信息 -->
+    <property name="PATTERN_LOG" value="[%appName] [%ip] [%d{yyyy-MM-dd HH:mm:ss.SSS}] [ %-5level] [%logger{50} %line{15}] : %msg %n" />
+    <!--带有颜色打印  一般在开发的时候使用-->
+    <property name="PATTERN_LOG_DEV" value="[%cyan(%appName)][%cyan(%ip)] [%yellow(%d{yyyy-MM-dd HH:mm:ss.SSS})] [ %highlight(%-5level)] [%green(%logger{50} %line{15})] : %highlight(%msg) %n" />
+
+    <!--控制台打印日志-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN_LOG_DEV}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+    <!-- 文件打印日志 -->
+    <appender name="FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${TEST_PATH}/log-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--日志文件保留天数 -->
+            <maxHistory>30</maxHistory>
+            <MaxFileSize>9MB</MaxFileSize>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN_LOG}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+    <!--自定义日志打印-->
+    <appender name="myAppender" class="com.cloud.mdd.log.MyAppender">
+        <!--自定义输出格式-->
+        <layout>
+            <pattern>
+                {
+                "line":%line,<!--行数-->
+                "appName":"%appName",<!--项目名称-->
+                "threadName": "%thread",<!--方法名称-->
+                "level": "%level",<!--级别-->
+                "loggerName":"%logger{50}",<!--类-->
+                <!--"message":"%message",--><!--日志信息详情-->
+                "ip":"%ip",<!--ip地址，内网ip地址-->
+                "reqId":"%reqId" <!--请求ID 不存在请求时请求ID为-1-->
+                }
+                !`@#$_$#@`!  <!--分隔符 当异常的时候是追加在后面的，所以特定分割符号-->
+            </pattern>
+        </layout>
+    </appender>
+
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="myAppender" />
+        </root>
+    </springProfile>
+
+    <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
+    <!--<springProfile name="pro">
+        <root level="info">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="myAppender" />
+            <appender-ref ref="FILE_LOG" />
+        </root>
+    </springProfile>-->
+
+
+</configuration>

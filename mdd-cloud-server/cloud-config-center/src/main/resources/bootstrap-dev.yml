@@ -3,7 +3,7 @@ spring:
     name: cloud-config-center
   cloud:
     config:
-      #配置中心地址（可使用git配置或者mysql配置）
+      #配置中心地址（可使用git配置或者mysql配置,此处指定为本地配置文件）
       server:
         native:
           searchLocations: classpath:/dev/

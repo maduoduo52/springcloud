@@ -1,0 +1,42 @@
+spring:
+  # redis相关配置
+  redis:
+    # 指定Redis库（默认为0）
+    database: 1
+    # Redis 地址
+    host: localhost
+    # Redis 端口
+    port: 6379
+    # Redis 密码，默认为空
+    password:
+    # Redis 连接超时时间（毫秒）
+    timeout: 2000ms
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最大空闲连接数
+        max-idle: 8
+        # 连接池中的最小空闲连接数
+        min-idle: 2
+  rabbitmq:
+    host: localhsot
+    # rabbit 默认端口5672
+    port: 5672
+    # rabbit 默认用户名、密码均为guest
+    username: guest
+    password: guest
+    #  消息发送到交换机确认机制,是否确认回调
+    publisher-confirms: true
+    publisher-returns: true
+  # http相关配置
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GTM+8
