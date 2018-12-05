@@ -3,6 +3,7 @@ package com.cloud.mdd.log.model;
 import com.cloud.mdd.log.quartz.LogService;
 import com.cloud.mdd.utils.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,15 @@ import java.util.List;
  */
 @Slf4j
 public class LogConstant {
+
+    @Autowired
+    private static LogService logService;
+
+    public static void serviceInit() {
+        if (logService == null) {
+            logService = SpringUtil.getBean(LogService.class);
+        }
+    }
 
     /**
      * 最多存储多少日志 超过上限的时候清空 不能因为日志而影响其他程序
@@ -65,13 +75,13 @@ public class LogConstant {
     }
 
     public static void add(MddLog mddLog) {
+        serviceInit();
         //日志放入静态区
         MDDLOGS.add(mddLog);
         //判断程序有没有加载完毕  如果程序没有加载完毕则记录所有日志 不进入下列判断
         if (LogConstant.IS_START) {
             //当数量到达NUM的时候 则清除日志数据 避免日志数量过多
             if (MDDLOGS.size() > NUM) {
-                LogService logService = null;
                 try {
                     logService = SpringUtil.getBean(LogService.class);
                 } catch (Exception e) {
