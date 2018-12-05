@@ -82,11 +82,6 @@ public class LogConstant {
         if (LogConstant.IS_START) {
             //当数量到达NUM的时候 则清除日志数据 避免日志数量过多
             if (MDDLOGS.size() > NUM) {
-                try {
-                    logService = SpringUtil.getBean(LogService.class);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
                 if (logService == null) {
                     LogConstant.FLAG = false;
