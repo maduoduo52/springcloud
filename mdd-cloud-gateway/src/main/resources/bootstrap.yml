@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: cloud-gateway
+info:
+  mark: 网关中心
+  author: Maduo
+  version: 1.0.0

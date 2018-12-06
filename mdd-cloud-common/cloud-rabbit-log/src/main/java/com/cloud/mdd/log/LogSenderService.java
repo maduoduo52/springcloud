@@ -17,7 +17,7 @@ import java.util.List;
  * @Create 2018/12/4 21:57
  */
 @Configuration
-@Slf4j(topic = "rabbit-log")
+@Slf4j(topic = "cloud-rabbit-log")
 public class LogSenderService {
 
     @Autowired
