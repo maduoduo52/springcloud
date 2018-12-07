@@ -31,6 +31,7 @@
         <module>cloud-common</module>
         <module>cloud-base-log</module>
         <module>cloud-rabbit-log</module>
+        <module>cloud-cache-config</module>
     </modules>
     <dependencies>
         <!--lombok-->
