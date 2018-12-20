@@ -37,6 +37,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.cloud.mdd</groupId>
+            <artifactId>cloud-base-log</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <!-- 网关剔除webjar包 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: customer-server
+  profiles:
+    active: dev #开发环境
+server:
+  port: 8764
+info:
+  mark: 客户服务
+  author: Maduo
+  version: 1.0

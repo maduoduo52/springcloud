@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    config:
+      label: dev
+      discovery:
+        enabled: true
+        service-id: cloud-config-center
+eureka:
+  instance:
+    #使用ip注册
+    prefer-ip-address: true
+    # 修改显示的微服务名为：IP:端口
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    # 每隔10s发送一次心跳
+    lease-renewal-interval-in-seconds: 10
+    # 告知服务端20秒还未收到心跳的话，就将该服务移除列表
+    lease-expiration-duration-in-seconds: 20
+  client:
+    service-url:
+      defaultZone: http://admin:123456@localhost:8761/eureka/
+logging:
+  #日志级别为debug
+  level:
+    org.springframework.cloud.gateway: debug
