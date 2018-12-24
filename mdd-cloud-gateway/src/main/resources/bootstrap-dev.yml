@@ -5,10 +5,31 @@ spring:
         locator:
           # 是否与服务发现组件进行结合，通过 serviceId 转发到具体的服务实例
           enabled: true
-  main:
-    allow-bean-definition-overriding: true
+      default-filters:
+      #路由配置
+      routes:
+      - id: customer-server
+        uri: http://localhost:8764
+        predicates: #路径匹配规则
+        - Path= /customer/**
+        filters:
+#        - StripPrefix= 1  #去除请求路径中第一段(/customer/test.html被处理成/test.html)
+        - RemoveRequestHeader=Origin
+        - name: Hystrix
+          args:
+            name: customerHystrixCommand
+            fallbackUri: forward:/hystrixTimeout
+#        - JwtCheck
+      globalcors: #全局跨域配置
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*" #允许向该服务器提交请求的URI，*表示全部允许，在SpringMVC中，如果设成*，会自动转成当前请求头中的Origin
+            allowedMethods: "*" #允许提交请求的方法，*表示全部允许
+            allowedHeaders: "*" #允许访问的头信息,*表示全部
+            maxAge: 18000000
+            allowCredentials: true #允许cookies跨域
 server:
-  port: 8763
+  port: 8775
 eureka:
   instance:
     #使用ip注册
@@ -22,7 +43,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://admin:123456@localhost:8761/eureka/
-logging:
-  #日志级别为debug
-  level:
-    org.springframework.cloud.gateway: debug
